@@ -9,15 +9,15 @@ Brick Breaker game consists of bricks aligned at the top of the screen. The play
 import javax.swing.JFrame;
 public class BB {
     public static void main(String[] args) {
-     // create the JFrame
+        //create the JFrame
         JFrame obj = new JFrame();
-     // Gameplay gameplay = new Gameplay();
+        Gameplay gameplay = new Gameplay();
         obj.setBounds(10,10,700,600);
         obj.setTitle("Breakout Ball");
         obj.setResizable(false);
         obj.setVisible(true);
         obj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-     // obj.add(gameplay);
+        obj.add(gameplay);
     }
     
 }
