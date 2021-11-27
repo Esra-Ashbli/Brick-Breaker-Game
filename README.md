@@ -6,6 +6,7 @@ Brick Breaker game consists of bricks aligned at the top of the screen. The play
 
 ```java
 
+
 import javax.swing.JFrame;
 public class BB {
     public static void main(String[] args) {
@@ -22,7 +23,6 @@ public class BB {
     
 }
 
-
 ```
 
 
@@ -33,8 +33,10 @@ public class BB {
 
 ```java
 
+
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -83,7 +85,9 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
        
        //the ball
        g.setColor(Color.yellow);
-       g.fillRect(ballposX, ballposY, 20, 20);
+       g.fillOval(ballposX, ballposY, 20, 20);
+       
+       g.dispose();
    
    }
    
@@ -122,10 +126,33 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     public void keyReleased(KeyEvent e) {}
 
     @Override
-    public void actionPerformed(ActionEvent e) {}
+    public void actionPerformed(ActionEvent e) {
+        timer.start();
+        if(play){
+           
+           if(new Rectangle(ballposX, ballposY, 20,20).intersects(new Rectangle(playerX, 550, 100, 8))){
+               ballYdir = -ballYdir;
+           }
+            
+           ballposX += ballXdir;
+           ballposY += ballYdir;
+           if(ballposX < 0){
+               ballXdir = -ballXdir;
+           }
+           if(ballposY < 0){
+               ballYdir = -ballYdir;
+           }
+           if(ballposX > 670){
+               ballXdir = -ballXdir;
+           }
+        }
+        
+        repaint();
+    }
 
         
 }
+
 
 
 
