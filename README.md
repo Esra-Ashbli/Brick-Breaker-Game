@@ -228,10 +228,10 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     }
     }
         
-
+```
 
 ##MapGenerator.java
-
+```java
 import java.awt.BasicStroke;
  import java.awt.Color;
 import java.awt.Graphics2D; 
