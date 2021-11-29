@@ -5,8 +5,6 @@ Brick Breaker game consists of bricks aligned at the top of the screen. The play
 ##BB.java
 
 ```java
-
-
 import javax.swing.JFrame;
 public class BB {
     public static void main(String[] args) {
@@ -23,18 +21,15 @@ public class BB {
     
 }
 
+        
 ```
-
-
-
-
-
 ##Gameplay.java
-
 ```java
 
+ 
+
+
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -47,7 +42,9 @@ import javax.swing.JPanel;
 public class Gameplay extends JPanel implements KeyListener, ActionListener{
     private boolean play = false;
     private int score = 0;
+    
     private int totalBricks = 21;
+    
     private Timer timer;
     private int delay = 8;
     
@@ -57,11 +54,11 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     private int ballposY = 350;
     private int ballXdir = -1;
     private int ballYdir = -2;
-    private MapGenerator map ;
     
+    private MapGenerator map;
     //constructor
    public Gameplay(){
-       map=new MapGenerator(3,7);
+       map = new MapGenerator(3, 7);
        addKeyListener(this);
        setFocusable(true);
        setFocusTraversalKeysEnabled(false);
@@ -75,54 +72,24 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
        //background
        g.setColor(Color.black);
        g.fillRect(1, 1, 692, 692);//((WIDTH, delay, WIDTH, HEIGHT))
+       
        //drawing map
-       map.draw((Graphics2D)g);
+       map.drow((Graphics2D)g);
+       
        //borders
        g.setColor(Color.yellow);
        g.fillRect(0, 0, 3, 592);
        g.fillRect(0, 0, 692, 3);
        g.fillRect(691, 0, 3, 592);
        
-       
-       //scores
-       g.setColor(Color.yellow);
-       g.setFont(new Font("serif" , Font.BOLD , 25));
-       g.drawString(""+score, 590,30);
-       
-
        //the paddle
        g.setColor(Color.GREEN);
        g.fillRect(playerX, 550, 100, 8);
        
        //the ball
-       g.setColor(Color.red);
+       g.setColor(Color.yellow);
        g.fillOval(ballposX, ballposY, 20, 20);
        
-       if(totalBricks <=0){
-       play=false;
-       ballXdir=0;
-       ballYdir=0;
-       g.setColor(Color.pink);
-       g.setFont(new Font("serif" , Font.BOLD , 30));
-       g.drawString("You Won !! ",260,300);
-       
-       g.setFont(new Font("serif" , Font.BOLD , 30));
-       g.drawString("Press Enter To Restart ", 230,350);
-       
-       }
-       
-       
-       if(ballposY>570){
-       play=false;
-       ballXdir=0;
-       ballYdir=0;
-       g.setColor(Color.pink);
-       g.setFont(new Font("serif" , Font.BOLD , 30));
-       g.drawString("Game Over ! ", 190,300);
-       g.setFont(new Font("serif" , Font.BOLD , 30));
-       g.drawString("Press Enter To Restart ", 230,350);
-
-       }
        g.dispose();
    
    }
@@ -145,21 +112,6 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
            } else{
                moveLeft();
            }
-        }
-        if(e.getKeyCode()== KeyEvent.VK_ENTER){
-            if(!play){
-            play=true;
-            ballposX=120;
-            ballposY=350; 
-            ballXdir=-1;
-            ballYdir=-2;
-            score=0;
-            totalBricks=21;
-            map=new MapGenerator(3,7);
-            
-             repaint();            
-            }
-        
         }
     }
     
@@ -185,32 +137,39 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
                ballYdir = -ballYdir;
            }
            
-           A:  for(int i=0;i<map.map.length;i++){
-                      for(int j=0;j<map.map[0].length;j++){
-                          if(map.map[i][j]>0){
-                              int brickX = j* map.brickWidth + 80;
-                              int brickY=i* map.bricktHeight + 50;
-                              int brickWidth= map.brickWidth;
-                              int brickHeight= map.bricktHeight;
-                              
-                              
-             Rectangle rect = new Rectangle(brickX, brickY, brickWidth,brickHeight);
-             Rectangle ballRect = new Rectangle(ballposX, ballposY, 20, 20);
-             Rectangle brickRect =rect; 
-               if(ballRect.intersects(brickRect)){
-                        map.setBrickvalue(0,i,j);
-                        totalBricks--;
-                        score+=5;
-                    if(ballposX +19 <=brickRect.x || ballposX +1>= brickRect.x +brickRect.width){
-                         ballXdir=-ballXdir;                
-                        }else{
-                           ballYdir=-ballYdir;
-                     }    
-                      break A;
-                  }
+           for(int i = 0; i< map.map.length; i++){
+               A: for(int j = 0; j< map.map[0].length; j++){
+                   if(map.map[i][j]>0){
+                       int brickX = j*map.brickWidth + 80;
+                       int brickY = i*map.brickHeight + 50;
+                       int brickWidth = map.brickWidth;
+                       int brickHeight = map.brickHeight;
+                       
+                       Rectangle rect = new Rectangle(brickX, brickY, brickWidth, brickHeight);
+                       Rectangle ballRect = new Rectangle(ballposX, ballposY, 20, 20);
+                       Rectangle brickRect = rect;
+                       
+                       
+                       if(ballRect.intersects(brickRect)){
+                           map.setBrickValue(0, i, j);
+                           totalBricks--;
+                           score += 5;
+                           
+                           if(ballposX+19 <= brickRect.x || ballposX+1>= brickRect.x + brickRect.width){
+                               ballXdir = -ballXdir;
+                           }else { 
+                                ballYdir = -ballYdir;
+                           }
+                           
+                           break A;
+               
+                       }    
+                   }
+           
                }
-           }
-         } 
+        
+           }   
+            
            ballposX += ballXdir;
            ballposY += ballYdir;
            if(ballposX < 0){
@@ -222,55 +181,58 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
            if(ballposX > 670){
                ballXdir = -ballXdir;
            }
-        
         }
+        
         repaint();
     }
-    }
+    
+        
+}
         
 ```
 
 ##MapGenerator.java
 ```java
+
 import java.awt.BasicStroke;
- import java.awt.Color;
-import java.awt.Graphics2D; 
+import java.awt.Color;
+import java.awt.Graphics2D;
 public class MapGenerator {
-      public int map[][];
-      public int brickWidth;
-      public int bricktHeight;
-      public MapGenerator(int row, int col) {
-       map = new int[row][col];
-      for (int i= 0; i< map.length; i++) {
-       for(int j=0; j<map[0].length; j++) {
-                  map[i][j] = 1;
-       }
-    } 
- 
-      brickWidth = 540/col;
-     bricktHeight = 150/row;
-}  
-         public void draw(Graphics2D g){
-              for (int i =0; i< map.length; i++) {
-                   for (int j=0; j< map[0].length; j++) {
-                        if(map[i][j] > 0){
-                             g.setColor (Color.white);
-                             g.fillRect(j * brickWidth + 80 , i * bricktHeight + 50 , brickWidth, bricktHeight);
-       
-     
-                             g.setStroke(new BasicStroke(3));
-                             g.setColor(Color.black);
-                             g.drawRect(j * brickWidth + 80 , i * bricktHeight + 50 , brickWidth, bricktHeight);
-                  }
-              }
-         }
-   }
-
-   public void setBrickvalue(int value, int row, int col) {
-        map [row][col]=value; 
+    public int map[][];
+    public int brickWidth;
+    public int brickHeight;
+    //constructor
+    public MapGenerator(int row, int col){
+        map = new int[row][col];
+        for(int i = 0; i< map.length; i++){
+            for(int j = 0;j< map[0].length;j++){
+                map[i][j]=1; 
+            }
+        }
+        
+        brickWidth = 540/col;
+        brickHeight = 150/row;        
     }
+    public void drow(Graphics2D g){
+        for(int i = 0; i< map.length; i++){
+            for(int j = 0;j< map[0].length;j++){
+                if(map[i][j]>0){
+                    g.setColor(Color.white);
+                    g.fillRect(j*brickWidth+80, i*brickHeight+50, brickWidth, brickHeight);
+                
+                    g.setStroke(new BasicStroke(3));
+                    g.setColor(Color.black);
+                    g.drawRect(j * brickWidth + 80 , i * brickHeight + 50 , brickWidth, brickHeight);
+                }
+                
+            }
+        }
+    }
+    
+    
+    public void setBrickValue(int value, int row, int col) {
+        map[row][col] = value; 
+    }   
 }
-
-
 
 ```
