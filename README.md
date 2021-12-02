@@ -101,10 +101,10 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
             ballYdir=0;
             g.setColor(Color.red);
             g.setFont(new Font("serif", Font.BOLD, 30));
-            g.drawString("You Won ", 260, 300);
+            g.drawString("YOU WON !, SCORE:"+score, 260, 300);
             
             g.setFont(new Font("serif", Font.BOLD, 20));
-            g.drawString("Press Enter to Restart ", 230, 350);
+            g.drawString("Press 'Enter' to restart", 230, 350);
        }
        
        if(ballposY > 570){
@@ -113,10 +113,10 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
             ballYdir=0;
             g.setColor(Color.red);
             g.setFont(new Font("serif", Font.BOLD, 30));
-            g.drawString("Game Over, Scores: ", 190, 300);
+            g.drawString("GAME OVER, SCORE:"+score, 190, 300);
             
             g.setFont(new Font("serif", Font.BOLD, 20));
-            g.drawString("Press Enter to Restart ", 230, 350);
+            g.drawString("Press 'Enter' to restart", 230, 350);
        }
        
        g.dispose();
